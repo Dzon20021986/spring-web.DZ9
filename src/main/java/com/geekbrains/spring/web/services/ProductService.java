@@ -53,7 +53,7 @@ public class ProductService {
     public void changeCost(Long productId, Integer delta) {
         Product product = productRepository.findById(productId).orElseThrow();
         product.setCost(product.getCost() + delta);
-        //studentRepository.save(student);
+//        studentRepository.save(student);
     }
 
 

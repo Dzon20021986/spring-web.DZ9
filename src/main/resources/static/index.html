@@ -39,12 +39,12 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="changeScore(p.id, -1)">-</button>
+                <button class="btn btn-primary" ng-click="changeCost(p.id, -1)">-</button>
                 {{p.cost}}
-                <button class="btn btn-primary" ng-click="changeScore(p.id, 1)">+</button>
+                <button class="btn btn-primary" ng-click="changeCost(p.id, 1)">+</button>
             </td>
             <td>
-                <button class="btn btn-danger" ng-click="deleteStudent(p.id)">Удалить</button>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
             </td>
         </tr>
         </tbody>

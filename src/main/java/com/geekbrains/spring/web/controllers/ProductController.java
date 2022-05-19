@@ -19,12 +19,12 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")  // вернуть все продукты
+    @GetMapping("/products")  // вернуть все продукты +
     public List<Product> getAllStudents() {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/products/{id}")  // поиск продукта по id
+    @GetMapping("/products/{id}")  // поиск продукта по id +
     public Product findById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id : " + id + "is not found"));
     }
@@ -37,6 +37,11 @@ public class ProductController {
     @PostMapping("/products")  // добавление нового товара
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
        return productService.addProduct(product);
+    }
+
+    @GetMapping("/products/change_cost")  // изменение стоимости
+    public void changeCost(@RequestParam Long productId, @RequestParam Integer delta) {
+        productService.changeCost(productId, delta);
     }
 
 //    @GetMapping("/students/change_score")
