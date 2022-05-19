@@ -31,6 +31,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+
     public Optional<Product> findById(Long id) {
        return productRepository.findById(id);
     }
@@ -49,6 +50,8 @@ public class ProductService {
 
     }
 
+
+
     @Transactional
     public void changeCost(Long productId, Integer delta) {
         Product product = productRepository.findById(productId).orElseThrow();
@@ -57,7 +60,10 @@ public class ProductService {
     }
 
 
-//    public Page<Product> findAllByBetween(Optional<BigDecimal> min, Optional<BigDecimal> max, Pageable pageable) {
+
+
+//    public Page<Product> findAllByAgeBetween(
+//            Optional<BigDecimal> min, Optional<BigDecimal> max, Pageable pageable) {
 //        if (min.isPresent() && max.isPresent()) {
 //            return productRepository.findAllByCostBetween(min.get(), max.get(), pageable);
 //        }

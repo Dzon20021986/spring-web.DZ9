@@ -37,5 +37,18 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     }
 
+    $scope.selectionProducts = function () {
+        $http({
+            url: contextPath + "select/products",
+            method: 'get',
+            params: {
+                min: $scope.differenceAdd.min,
+                max: $scope.differenceAdd.max
+            }
+        }).then(function (response){
+            alert(response.ProductsList)
+        })
+    };
+
     $scope.loadProducts();
 });

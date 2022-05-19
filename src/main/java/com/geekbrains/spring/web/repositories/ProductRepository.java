@@ -26,7 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //    List<Product> filterProductsByCostBetween(@Param("minVal") BigDecimal minVal,
 //                                              @Param("maxVal") BigDecimal maxVal);
-
+//
 //    Page<Product> findAllByCostBetween(BigDecimal min, BigDecimal max, Pageable pageable);
 //
 //    Page<Product> findAllByCostMinEqual(BigDecimal min, Pageable pageable);

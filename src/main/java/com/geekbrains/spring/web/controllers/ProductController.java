@@ -44,10 +44,12 @@ public class ProductController {
         productService.changeCost(productId, delta);
     }
 
-//    @GetMapping("/students/change_score")
-//    public void changeScore(@RequestParam Long studentId, @RequestParam Integer delta) {
-//        studentService.changeScore(studentId, delta);
+    // фильтр сравнения min-max
+//    @GetMapping("/select/products")
+//    public ProductDto selectionProduct(@RequestParam Integer min, @RequestParam Integer max) {
+//        return new ProductDto(productService);
 //    }
+
 
     @GetMapping("/products/between")
     public List<Product> findByCost(@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "100") Integer max) {
