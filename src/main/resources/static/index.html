@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+    <title>Продукты</title>
+</head>
+
+<p></p>
+<h3>Фильтр продуктов</h3>
+<form novalidate ng-submit="selectionProduct()">
+    <input class="form-control" type="number" placeholder="min" ng-model="newSelectionProduct.cost">
+    <p></p>
+    <input class="form-control" type="number" placeholder="max" ng-model="newSelectionProduct.cost">
+    <p></p>
+    <button type="submit" class="btn btn-primary">Показать список продуктов</button>
+</form>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+    <h3>Список продуктов</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Название продукта</td>
+            <td>Стоимость</td>
+            <td>Действие</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="changeScore(p.id, -1)">-</button>
+                {{p.cost}}
+                <button class="btn btn-primary" ng-click="changeScore(p.id, 1)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteStudent(p.id)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <h3>Добавить продукт через JSON</h3>
+    <form novalidate ng-submit="createProductJson()">
+        <input class="form-control" type="text" placeholder="Название" ng-model="newProductJson.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Стоимость" ng-model="newProductJson.cost">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить JSON продукта</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GeekSpring</title>
+</head>
+<body>
+<h1>List of products</h1>
+<br>
+<span th:text="${twr.getId()}"></span>
+<span th:text="${twr.getTitle()}"></span>
+<span th:text="${twr.getCost()}"></span>
+
+<a th:href="@{'/product/all'}">"На страницу со всеми продуктами"</a>
+</body>
+</html>
