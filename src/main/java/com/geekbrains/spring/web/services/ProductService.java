@@ -67,8 +67,6 @@ public class ProductService {
 
     }
 
-
-
     @Transactional
     public void changeCost(Long productId, Integer delta) {
         Product product = productRepository.findById(productId).orElseThrow();
@@ -76,21 +74,5 @@ public class ProductService {
 //        studentRepository.save(student);
     }
 
-
-
-
-//    public Page<Product> findAllByAgeBetween(
-//            Optional<BigDecimal> min, Optional<BigDecimal> max, Pageable pageable) {
-//        if (min.isPresent() && max.isPresent()) {
-//            return productRepository.findAllByCostBetween(min.get(), max.get(), pageable);
-//        }
-//        if (min.isPresent()) {
-//            return productRepository.findAllByCostMinEqual(min.get(), pageable);
-//        }
-//        if (max.isPresent()) {
-//            return productRepository.findAllByCostMaxEqual(max.get(), pageable);
-//        }
-//        return productRepository.findAll(pageable);
-//    }
 
 }
