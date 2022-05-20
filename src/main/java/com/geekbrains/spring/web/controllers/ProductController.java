@@ -4,6 +4,7 @@ import com.geekbrains.spring.web.data.Product;
 import com.geekbrains.spring.web.exception.AppError;
 import com.geekbrains.spring.web.exception.ResourceNotFoundException;
 import com.geekbrains.spring.web.services.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,30 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")  // вернуть все продукты +
-    public List<Product> getAllStudents() {
-        return productService.getAllProducts();
+//    @GetMapping("/products")  // вернуть все продукты +
+//    public List<Product> getAllProducts() {
+//        return productService.getAllProducts();
+//    }
+
+    /*
+    При проверке  через Postman, выдает ошибку следующую
+    Servlet.service() for servlet [dispatcherServlet] in context with path [/app] threw exception
+   [Request processing failed; nested exception is java.lang.IllegalArgumentException:
+   Page index must not be less than zero!] with root cause.
+   индекс страницы не должен быть меньше нуля!]
+     */
+
+    @GetMapping("/products")
+    public Page<Product> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
+                                        @RequestParam(name = "min_cost", required = false) Integer minCost,
+                                        @RequestParam(name = "maxcost", required = false) Integer maxCost,
+                                        @RequestParam(name = "title_part", required = false) String partTitle
+        ) {
+        if (page < 1){
+            page = 1;
+        }
+        return productService.find(page, maxCost, minCost, partTitle);
+
     }
 
     @GetMapping("/products/{id}")  // поиск продукта по id +
