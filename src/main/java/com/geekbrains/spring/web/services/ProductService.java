@@ -37,7 +37,7 @@ public class ProductService {
         if (partTitle != null) {
             spec = spec.and(ProductSpecification.likeTitle(partTitle));
         }
-        return productRepository.findAll(spec, PageRequest.of(-1, 10));
+        return productRepository.findAll(spec, PageRequest.of(p -1, 10));
     }
 
     public List<Product> getAllProducts() {

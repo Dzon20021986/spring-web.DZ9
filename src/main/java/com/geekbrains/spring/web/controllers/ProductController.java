@@ -25,14 +25,6 @@ public class ProductController {
 //        return productService.getAllProducts();
 //    }
 
-    /*
-    При проверке  через Postman, выдает ошибку следующую
-    Servlet.service() for servlet [dispatcherServlet] in context with path [/app] threw exception
-   [Request processing failed; nested exception is java.lang.IllegalArgumentException:
-   Page index must not be less than zero!] with root cause.
-   индекс страницы не должен быть меньше нуля!]
-     */
-
     @GetMapping("/products")
     public Page<Product> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
                                         @RequestParam(name = "min_cost", required = false) Integer minCost,
