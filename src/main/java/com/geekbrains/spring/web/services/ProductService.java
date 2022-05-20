@@ -3,8 +3,11 @@ package com.geekbrains.spring.web.services;
 import com.geekbrains.spring.web.data.Product;
 import com.geekbrains.spring.web.exception.AppError;
 import com.geekbrains.spring.web.repositories.ProductRepository;
+import com.geekbrains.spring.web.repositories.specification.ProductSpecification;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,20 @@ public class ProductService {
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public Page<Product> find(Integer p, Integer minCost, Integer maxCost, String partTitle) {
+        Specification<Product> spec = Specification.where(null);
+        if (minCost != null) {
+            spec = spec.and(ProductSpecification.costGreaterOrElseThan(minCost));
+        }
+        if (maxCost != null) {
+            spec = spec.and(ProductSpecification.lessGreaterOrElseThan(maxCost));
+        }
+        if (partTitle != null) {
+            spec = spec.and(ProductSpecification.likeTitle(partTitle));
+        }
+        return productRepository.findAll(spec, PageRequest.of(-1, 10));
     }
 
     public List<Product> getAllProducts() {

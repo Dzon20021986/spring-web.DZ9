@@ -1,5 +1,5 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8190/app';
+    const contextPath = 'http://localhost:8189/app';
 
     $scope.loadProducts = function () {
         $http.get(contextPath + '/products')
@@ -37,18 +37,18 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     }
 
-    $scope.selectionProducts = function () {
-        $http({
-            url: contextPath + "select/products",
-            method: 'get',
-            params: {
-                min: $scope.differenceAdd.min,
-                max: $scope.differenceAdd.max
-            }
-        }).then(function (response){
-            alert(response.ProductsList)
-        })
-    };
+    // $scope.selectionProducts = function () {
+    //     $http({
+    //         url: contextPath + "select/products",
+    //         method: 'get',
+    //         params: {
+    //             min: $scope.differenceAdd.min,
+    //             max: $scope.differenceAdd.max
+    //         }
+    //     }).then(function (response){
+    //         alert(response.ProductsList)
+    //     })
+    // };
 
     $scope.loadProducts();
 });
