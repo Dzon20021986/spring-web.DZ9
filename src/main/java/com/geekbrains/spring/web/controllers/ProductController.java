@@ -58,7 +58,7 @@ public class ProductController {
         productService.changeCost(productId, delta);
     }
 
-    //  фильтр сравнения min-max
+    // фильтр сравнения min-max
 //    @GetMapping("/select/products")
 //    public ProductDto selectionProduct(@RequestParam Integer min, @RequestParam Integer max) {
 //        return new ProductDto(productService);

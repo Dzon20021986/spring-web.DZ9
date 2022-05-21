@@ -33,7 +33,7 @@ public class ProductService {
             spec = spec.and(ProductSpecification.costGreaterOrElseThan(minCost));
         }
         if (maxCost != null) {
-            spec = spec.and(ProductSpecification.essThanOrEqualTo(maxCost));
+            spec = spec.and(ProductSpecification.lessThanOrEqualTo(maxCost));
         }
         if (partTitle != null) {
             spec = spec.and(ProductSpecification.likeTitle(partTitle));
