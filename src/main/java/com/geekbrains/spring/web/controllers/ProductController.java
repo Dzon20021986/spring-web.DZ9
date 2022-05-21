@@ -28,13 +28,13 @@ public class ProductController {
     @GetMapping("/products")
     public Page<Product> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
                                         @RequestParam(name = "min_cost", required = false) Integer minCost,
-                                        @RequestParam(name = "maxcost", required = false) Integer maxCost,
+                                        @RequestParam(name = "max_cost", required = false) Integer maxCost,
                                         @RequestParam(name = "title_part", required = false) String partTitle
         ) {
         if (page < 1){
             page = 1;
         }
-        return productService.find(page, maxCost, minCost, partTitle);
+        return productService.find(page, minCost, maxCost, partTitle);
 
     }
 
@@ -58,7 +58,7 @@ public class ProductController {
         productService.changeCost(productId, delta);
     }
 
-    // фильтр сравнения min-max
+    //  фильтр сравнения min-max
 //    @GetMapping("/select/products")
 //    public ProductDto selectionProduct(@RequestParam Integer min, @RequestParam Integer max) {
 //        return new ProductDto(productService);

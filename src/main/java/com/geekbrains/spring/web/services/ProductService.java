@@ -28,15 +28,18 @@ public class ProductService {
 
     public Page<Product> find(Integer p, Integer minCost, Integer maxCost, String partTitle) {
         Specification<Product> spec = Specification.where(null);
+        // select p from Product p where true
         if (minCost != null) {
             spec = spec.and(ProductSpecification.costGreaterOrElseThan(minCost));
         }
         if (maxCost != null) {
-            spec = spec.and(ProductSpecification.lessGreaterOrElseThan(maxCost));
+            spec = spec.and(ProductSpecification.essThanOrEqualTo(maxCost));
         }
         if (partTitle != null) {
             spec = spec.and(ProductSpecification.likeTitle(partTitle));
         }
+        // select p from Product p where true and like &title&
+
         return productRepository.findAll(spec, PageRequest.of(p -1, 10));
     }
 

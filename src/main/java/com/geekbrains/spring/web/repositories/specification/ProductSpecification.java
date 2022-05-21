@@ -8,7 +8,7 @@ public class ProductSpecification {
         return (((root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("cost"), cost)));
     }
 
-    public static Specification<Product> lessGreaterOrElseThan(Integer cost) {
+    public static Specification<Product> essThanOrEqualTo(Integer cost) {
         return (((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("cost"), cost)));
     }
 
