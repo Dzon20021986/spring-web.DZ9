@@ -1,6 +1,7 @@
 package com.geekbrains.spring.web.services;
 
 import com.geekbrains.spring.web.data.Product;
+import com.geekbrains.spring.web.dto.ProductDto;
 import com.geekbrains.spring.web.exception.AppError;
 import com.geekbrains.spring.web.repositories.ProductRepository;
 import com.geekbrains.spring.web.repositories.specification.ProductSpecification;
@@ -40,42 +41,70 @@ public class ProductService {
         }
         // select p from Product p where true and like &title&
 
-        return productRepository.findAll(spec, PageRequest.of(p -1, 10));
+        return productRepository.findAll(spec, PageRequest.of(p - 1, 25));
     }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) {  // +
         productRepository.deleteById(id);
     }
 
 
-    public Optional<Product> findById(Long id) {
-       return productRepository.findById(id);
+    public ProductDto findById(Long id) {  // + Optional<Product>
+        return productRepository.findById(id).map(p -> new ProductDto(p)).orElseThrow();
     }
 
     public List<Product> findByCost(Integer min, Integer max) {
         return productRepository.findAllByCostBetween(min, max);
     }
 
-    public ResponseEntity<?> addProduct(Product product) {
-        if (productRepository.existsProductByTitle(product.getTitle())) {
-            return new ResponseEntity<>(new AppError(HttpStatus.CONFLICT.value(), "Product is alredy"), HttpStatus.CONFLICT);
-        }else{
-            productRepository.save(product);
-            return new ResponseEntity<>(HttpStatus.OK);
+    public void addProduct(ProductDto productDto) {
+        productRepository.save(new Product(null, productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
+
+    }
+
+    public void updateProduct(ProductDto productDto) {
+        if (productRepository.findById(productDto.getId()).isPresent()) {
+            productRepository.save(new Product(productDto.getId(), productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
         }
 
     }
+
 
     @Transactional
     public void changeCost(Long productId, Integer delta) {
         Product product = productRepository.findById(productId).orElseThrow();
         product.setCost(product.getCost() + delta);
-//        studentRepository.save(student);
+//        productRepository.save(product);
     }
 
 
 }
+
+
+//    public ResponseEntity<?> addProduct(Product product) {
+//        if (productRepository.existsProductByTitle(product.getTitle())) {
+//            return new ResponseEntity<>(new AppError(HttpStatus.CONFLICT.value(), "Product is alredy"), HttpStatus.CONFLICT);
+//        }else{
+//            productRepository.save(product);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//
+//    }
+
+//    public ProductDto addProduct(ProductDto product) {
+//        Optional<Product> productByNew = productRepository.findById(product.getId());
+//        if (productByNew.isPresent()) {
+//            return productRepository.save(product);
+//        }else{
+//            return productRepository.save(new Product(product.getId(), product.getTitle(), product.getCost(), product.getCategory()));
+//        }
+//        product.getId();
+//        product.getTitle();
+//        product.getCost();
+//        product.getCategory();
+//        return productRepository.save(product.);
+//    }

@@ -1,14 +1,9 @@
-package com.geekbrains.spring.web.data;
+package com.geekbrains.spring.web.dto;
 
-import javax.persistence.*;
+import com.geekbrains.spring.web.data.Product;
 
-@Entity
-@Table(name = "products")
-public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class ProductDto {
     private Long id;
 
     private String title;
@@ -49,13 +44,14 @@ public class Product {
         this.category = category;
     }
 
-    public Product() {
+    public ProductDto(Product product) {
+        this.id = product.getId();
+        this.title = product.getTitle();
+        this.cost = product.getCost();
+        this.category = product.getCategory();
+
     }
 
-    public Product(Long id, String title, Integer cost, String category) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-        this.category = category;
+    public ProductDto() {
     }
 }
