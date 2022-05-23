@@ -1,17 +1,10 @@
 package com.geekbrains.spring.web.repositories;
 
 import com.geekbrains.spring.web.data.Product;
-import com.geekbrains.spring.web.dto.ProductDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     boolean existsProductByTitle(String title);
 
-//    Page<ProductDto> findAll(Specification<Product> spec, PageRequest of);
 
 
 

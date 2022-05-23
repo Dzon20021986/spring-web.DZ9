@@ -17,7 +17,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping()       // "/products" +
+    @GetMapping()
     public Page<Product> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
                                         @RequestParam(name = "min_cost", required = false) Integer minCost,
                                         @RequestParam(name = "max_cost", required = false) Integer maxCost,
@@ -30,14 +30,12 @@ public class ProductController {
 
     }
 
-    @GetMapping("/{id}")  //  "/products/{id}"  поиск продукта по id +
+    @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
         return productService.findById(id);
     }
 
-    // .orElseThrow(() -> new ResourceNotFoundException("Product with id : " + id + "is not found"))
-
-    @PostMapping()  // добавление нового товара "/products"
+    @PostMapping()
     public void addProduct(@RequestBody ProductDto product) {
         if (product.getId() != null) {
             product.setId(null);
@@ -46,58 +44,19 @@ public class ProductController {
     }
 
     @PutMapping
-    public void updateProduct(@RequestBody ProductDto productDto) {
-         productService.updateProduct(productDto);
+    public void changeProduct(@RequestBody ProductDto productDto) {
+         productService.changeProduct(productDto);
     }
 
-    @DeleteMapping("/{id}")  // +
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
 
 
 
-    @GetMapping("/products/between")
+    @GetMapping("/between")
     public List<Product> findByCost(@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "100") Integer max) {
         return productService.findByCost(min, max);
     }
 }
-
-
-
-// @GetMapping("products/delete/{id}")  // удаление по id +
-//    public void deleteById(@PathVariable long id) {
-//        productService.deleteById(id);
-//    }
-
-
-
-// @GetMapping("/products")  // вернуть все продукты +
-//    public List<Product> getAllProducts() {
-//        return productService.getAllProducts();
-//    }
-
-
-// фильтр сравнения min-max
-//    @GetMapping("/select/products")
-//    public ProductDto selectionProduct(@RequestParam Integer min, @RequestParam Integer max) {
-//        return new ProductDto(productService);
-//    }
-
-//    @GetMapping("/products/change_cost")  // изменение стоимости
-//    public void changeCost(@RequestParam Long productId, @RequestParam Integer delta) {
-//        productService.changeCost(productId, delta);
-//    }
-
-//    @PostMapping()  // добавление нового товара "/products"
-//    public ResponseEntity<?> addProduct(@RequestBody Product product) {
-//        if (product.getId() != null) {
-//            product.setId(null);
-//        }
-//        return productService.addProduct(product);
-//    }
-
-//    @PutMapping
-//    public ResponseEntity<?> updateProduct(@RequestBody Product product) {
-//        return productService.addProduct(product);
-//    }

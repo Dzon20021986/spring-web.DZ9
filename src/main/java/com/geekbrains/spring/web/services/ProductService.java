@@ -41,14 +41,14 @@ public class ProductService {
         }
         // select p from Product p where true and like &title&
 
-        return productRepository.findAll(spec, PageRequest.of(p - 1, 25));
+        return productRepository.findAll(spec, PageRequest.of(p - 1, 10));
     }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public void deleteById(Long id) {  // +
+    public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
 
@@ -66,7 +66,7 @@ public class ProductService {
 
     }
 
-    public void updateProduct(ProductDto productDto) {
+    public void changeProduct(ProductDto productDto) {
         if (productRepository.findById(productDto.getId()).isPresent()) {
             productRepository.save(new Product(productDto.getId(), productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
         }
