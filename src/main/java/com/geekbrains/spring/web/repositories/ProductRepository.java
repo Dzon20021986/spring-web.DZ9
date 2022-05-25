@@ -21,12 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     boolean existsProductByTitle(String title);
 
+    boolean existsProductById(Long id);
 
-
-
-    // Если бы у студентов был List<Book>, то не ленивая загрузка книг:
-    // @Query("select s from Student s join fetch s.books where s.id = :id")
-    // Optional<Student> findByIdWithBooks(String name);
 
 
 

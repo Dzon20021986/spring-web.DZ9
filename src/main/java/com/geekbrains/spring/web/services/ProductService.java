@@ -1,10 +1,15 @@
 package com.geekbrains.spring.web.services;
 
+import com.geekbrains.spring.web.converters.ProductConverter;
 import com.geekbrains.spring.web.data.Product;
 import com.geekbrains.spring.web.dto.ProductDto;
 import com.geekbrains.spring.web.exception.AppError;
+import com.geekbrains.spring.web.exception.ValidateException;
 import com.geekbrains.spring.web.repositories.ProductRepository;
 import com.geekbrains.spring.web.repositories.specification.ProductSpecification;
+import com.geekbrains.spring.web.validators.ProductValidator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,21 +20,20 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ProductService {
-    private ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private final ProductRepository productRepository;
+    private final ProductConverter productConverter;
+    private final ProductValidator productValidator;
 
-    public Page<Product> find(Integer p, Integer minCost, Integer maxCost, String partTitle) {
+
+    public Page<Product> find(Integer p, Integer maxCost, Integer minCost, String partTitle) {
         Specification<Product> spec = Specification.where(null);
-        // select p from Product p where true
         if (minCost != null) {
             spec = spec.and(ProductSpecification.costGreaterOrElseThan(minCost));
         }
@@ -39,37 +43,42 @@ public class ProductService {
         if (partTitle != null) {
             spec = spec.and(ProductSpecification.likeTitle(partTitle));
         }
-        // select p from Product p where true and like &title&
-
         return productRepository.findAll(spec, PageRequest.of(p - 1, 10));
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
     public void deleteById(Long id) {
+        log.info("Product {} is delete", id);
         productRepository.deleteById(id);
     }
 
 
-    public ProductDto findById(Long id) {  // + Optional<Product>
-        return productRepository.findById(id).map(p -> new ProductDto(p)).orElseThrow();
+    public ProductDto findById(Long id) {
+        return productRepository.findById(id).map(productConverter::entityToDto).orElseThrow();
+
+        // new ProductDto(p)).orElseThrow();
     }
 
     public List<Product> findByCost(Integer min, Integer max) {
         return productRepository.findAllByCostBetween(min, max);
     }
 
-    public void addProduct(ProductDto productDto) {
-        productRepository.save(new Product(null, productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
-
+    public  ProductDto addProduct(ProductDto product) {
+        productValidator.validate(product);
+        productRepository.save(productConverter.dtoToEntity(product));
+        return product;
     }
 
-    public void changeProduct(ProductDto productDto) {
-        if (productRepository.findById(productDto.getId()).isPresent()) {
-            productRepository.save(new Product(productDto.getId(), productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
+
+    @Transactional
+    public ProductDto update(ProductDto productDto) {
+        if (productRepository.existsProductById(productDto.getId())) {
+            throw new ValidateException(List.of("Продукта с таким id не существует"));
         }
+        Product product = productRepository.getById(productDto.getId());
+        product.setCost(productDto.getCost());
+        product.setTitle(productDto.getTitle());
+        product.setCategory(productDto.getCategory());
+        return productDto;
 
     }
 
@@ -82,7 +91,26 @@ public class ProductService {
     }
 
 
+    @Transactional
+    public void updateTitle(Long id, ProductDto productDto) {
+        Product product = productRepository.getById(productDto.getId());
+        product.setTitle(productDto.getTitle());
+    }
 }
+
+//    public void changeProduct(ProductDto productDto) {
+//        if (productRepository.findById(productDto.getId()).isPresent()) {
+//            productRepository.save(new Product(productDto.getId(), productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
+//        }
+
+//    public List<Product> getAllProducts() {
+//        return productRepository.findAll();
+//    }
+
+
+//    public void addProduct(ProductDto productDto) {
+//        productRepository.save(new Product(null, productDto.getTitle(), productDto.getCost(), productDto.getCategory()));
+//    }
 
 
 //    public ResponseEntity<?> addProduct(Product product) {

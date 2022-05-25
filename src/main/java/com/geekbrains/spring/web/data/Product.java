@@ -1,12 +1,17 @@
 package com.geekbrains.spring.web.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -19,14 +24,4 @@ public class Product {
     private Integer cost;
 
     private  String category;
-
-    public Product() {
-    }
-
-    public Product(Long id, String title, Integer cost, String category) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-        this.category = category;
-    }
 }
