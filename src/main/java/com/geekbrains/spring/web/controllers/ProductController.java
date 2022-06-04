@@ -1,7 +1,7 @@
 package com.geekbrains.spring.web.controllers;
 
 import com.geekbrains.spring.web.converters.ProductConverter;
-import com.geekbrains.spring.web.data.Product;
+import com.geekbrains.spring.web.entities.Product;
 import com.geekbrains.spring.web.dto.ProductDto;
 import com.geekbrains.spring.web.services.ProductService;
 import lombok.RequiredArgsConstructor;

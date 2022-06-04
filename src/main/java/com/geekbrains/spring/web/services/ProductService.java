@@ -1,9 +1,8 @@
 package com.geekbrains.spring.web.services;
 
 import com.geekbrains.spring.web.converters.ProductConverter;
-import com.geekbrains.spring.web.data.Product;
+import com.geekbrains.spring.web.entities.Product;
 import com.geekbrains.spring.web.dto.ProductDto;
-import com.geekbrains.spring.web.exception.AppError;
 import com.geekbrains.spring.web.exception.ValidateException;
 import com.geekbrains.spring.web.repositories.ProductRepository;
 import com.geekbrains.spring.web.repositories.specification.ProductSpecification;
@@ -12,13 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
 import java.util.List;
 
