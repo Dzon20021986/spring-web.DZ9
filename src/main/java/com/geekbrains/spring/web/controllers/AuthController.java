@@ -1,6 +1,7 @@
 package com.geekbrains.spring.web.controllers;
 
 import com.geekbrains.spring.web.dto.JwtRequest;
+import com.geekbrains.spring.web.dto.JwtResponse;
 import com.geekbrains.spring.web.exception.AppError;
 import com.geekbrains.spring.web.services.UserService;
 import com.geekbrains.spring.web.utils.JwtTokenUtil;

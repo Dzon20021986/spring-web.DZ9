@@ -24,10 +24,6 @@ public class CartController {
 //    }
 
 
-
-
-
-
     @GetMapping("/delete{id}")
     public void delete(@PathVariable Long id) {
         productRepository.delete(id);

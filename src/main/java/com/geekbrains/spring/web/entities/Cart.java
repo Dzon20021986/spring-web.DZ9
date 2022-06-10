@@ -22,10 +22,10 @@ public class Cart {
 
 //    private Map<Product, Integer> orderList;
 
-//    @Column(name = "product_id")
+    @Column(name = "product_id")
     private Long product_id;
 
-//    @Column(name = "count")
+    @Column(name = "count")
     private Long count;
 
 
